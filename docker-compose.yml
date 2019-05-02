@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  php:
+    build: .
+    volumes:
+      - .:/code/
+    environment:
+      UID: "1000"
+
+  composer:
+    image: library/composer:1.8.5
+    environment:
+      UID: "1000"
+    command: install
+    volumes:
+      - .:/app/

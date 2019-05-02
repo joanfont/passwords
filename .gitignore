@@ -1,0 +1,6 @@
+composer.lock
+
+vendor/*
+!vendor/.gitkeep
+
+.phpunit.result.cache
