@@ -1,7 +1,7 @@
 <?php
 
 use Passwords\Comparator;
-use Passwords\HasherDetector;
+use Passwords\HasherFactory;
 use Passwords\Helper;
 use PHPUnit\Framework\TestCase;
 
@@ -10,24 +10,26 @@ use Passwords\Hasher;
 
 class HelperTest extends TestCase
 {
+  protected function setUp(): void
+  {
+    parent::setUp();
+    static::configureHelper();
+  }
 
   public function test_check_passwords_are_equal()
   {
-    $are_equal = $this->getHelper()->check('test', 'Dummy$$$test');
+    $are_equal = Helper::check('test', 'Dummy$$$test');
     $this->assertTrue($are_equal);
   }
 
   public function test_makes_password()
   {
-    $password = $this->getHelper()->make('test', null, Hasher\Dummy::class);
+    $password = Helper::make('test', null);
     $this->assertEquals('Dummy$$$test', $password);
   }
 
-  private function getHelper()
+  private function configureHelper()
   {
-    $detector = new HasherDetector([Hasher\Dummy::class]);
-    $comparator = new Comparator($detector);
-
-    return new Helper($detector, $comparator);
+    Helper::registerHasher(new Hasher\Dummy);
   }
 }

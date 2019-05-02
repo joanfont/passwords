@@ -7,7 +7,7 @@ class SHA1 extends Hasher
 {
   const NAME = 'SHA1';
 
-  public function encode(string $raw, ?string $salt, ?int $iteration = null): string
+  public function encode(string $raw, ?string $salt): string
   {
     return sha1($salt . $raw);
   }

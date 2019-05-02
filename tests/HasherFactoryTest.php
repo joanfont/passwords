@@ -1,57 +1,63 @@
 <?php
 
-use Passwords\HasherDetector;
+use Passwords\HasherFactory;
 use Passwords\Password;
 use PHPUnit\Framework\TestCase;
 use Passwords\Hasher;
 use Passwords\Exception;
 
-class HasherDetectorTest extends TestCase
+class HasherFactoryTest extends TestCase
 {
   public function test_detects_allowed_hash_by_password()
   {
-    $detector = new HasherDetector([Hasher\Dummy::class]);
+    $factory = new HasherFactory([Hasher\Dummy::NAME => Hasher\Dummy::class]);
     $allowed_password = new Password(Hasher\Dummy::NAME, null, null, 'test');
-    $hasher = $detector->detectByPassword($allowed_password);
+
+    $hasher = $factory->makeFromPassword($allowed_password);
 
     $this->assertInstanceOf(Hasher\Dummy::class, $hasher);
   }
 
   public function test_detects_not_allowed_hash_by_password()
   {
-    $this->expectException(Exception\UnknownAlgorithm::class);
-    $detector = new HasherDetector([]);
+    $factory = new HasherFactory([]);
     $allowed_password = new Password(Hasher\Dummy::NAME, null, '', 'test');
-    $detector->detectByPassword($allowed_password);
+
+    $this->expectException(Exception\UnknownAlgorithm::class);
+    $factory->makeFromPassword($allowed_password);
   }
 
   public function test_detects_allowed_hash_by_algorithm()
   {
-    $detector = new HasherDetector([Hasher\Dummy::class]);
-    $hasher = $detector->detectByAlgorithm(Hasher\Dummy::NAME);
+    $factory = new HasherFactory([Hasher\Dummy::NAME => Hasher\Dummy::class]);
+
+    $hasher = $factory->makeFromAlgorithm(Hasher\Dummy::NAME);
 
     $this->assertInstanceOf(Hasher\Dummy::class, $hasher);
   }
 
   public function test_detects_not_allowed_hash_by_algorithm()
   {
+    $detector = new HasherFactory([]);
+
     $this->expectException(Exception\UnknownAlgorithm::class);
-    $detector = new HasherDetector([]);
-    $detector->detectByAlgorithm(Hasher\Dummy::NAME);
+    $detector->makeFromAlgorithm(Hasher\Dummy::NAME);
   }
 
   public function test_detects_allowed_hash_by_hasher()
   {
-    $detector = new HasherDetector([Hasher\Dummy::class]);
-    $hasher = $detector->detectByHasher(Hasher\Dummy::class);
+    $detector = new HasherFactory([Hasher\Dummy::NAME => Hasher\Dummy::class]);
+
+    $hasher = $detector->makeFromHasherClass(Hasher\Dummy::class);
 
     $this->assertInstanceOf(Hasher\Dummy::class, $hasher);
   }
 
   public function test_detects_not_allowed_hash_by_hasher()
   {
+    $detector = new HasherFactory([]);
+
     $this->expectException(Exception\UnknownAlgorithm::class);
-    $detector = new HasherDetector([]);
-    $detector->detectByHasher(Hasher\Dummy::class);
+    $detector->makeFromHasherClass(Hasher\Dummy::class);
   }
 }

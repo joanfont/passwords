@@ -1,10 +1,11 @@
 <?php
 
 use Passwords\Comparator;
-use Passwords\HasherDetector;
-use Passwords\Password;
 use Passwords\Hasher;
+use Passwords\HasherFactory;
+use Passwords\Password;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 
 class ComparatorTest extends TestCase
 {
@@ -14,8 +15,8 @@ class ComparatorTest extends TestCase
     $raw = 'test';
     $password = new Password(Hasher\Dummy::NAME, null, null, 'test');
 
-    $detector = $this->getMockDetector();
-    $comparator = new Comparator($detector);
+    $factory = $this->getFactoryMock();
+    $comparator = new Comparator($factory);
     $are_equal = $comparator->compare($raw, $password);
     $this->assertTrue($are_equal);
   }
@@ -25,16 +26,16 @@ class ComparatorTest extends TestCase
     $raw = 'test1';
     $password = new Password(Hasher\Dummy::NAME, null, null, 'test');
 
-    $detector = $this->getMockDetector();
+    $detector = $this->getFactoryMock();
     $comparator = new Comparator($detector);
     $are_equal = $comparator->compare($raw, $password);
     $this->assertFalse($are_equal);
   }
 
-  private function getMockDetector()
+  private function getFactoryMock()
   {
-    $mock_detector = $this->prophesize(HasherDetector::class);
-    $mock_detector->detectByPassword(Prophecy\Argument::any())->willReturn(new Hasher\Dummy());
-    return $mock_detector->reveal();
+    $factory_prophet = $this->prophesize(HasherFactory::class);
+    $factory_prophet->makeFromPassword(Argument::any())->willReturn(new Hasher\Dummy());
+    return $factory_prophet->reveal();
   }
 }

@@ -5,18 +5,24 @@ namespace Passwords\Hasher;
 
 abstract class Hasher
 {
-  protected const NAME = null;
-  protected const WORK_FACTOR = null;
+  const NAME = null;
 
-  abstract public function encode(string $raw, ?string $salt, ?int $iterations = null): string;
+  protected $iterations;
 
-  public function getWorkFactor()
+  public final function __construct(?int $iterations = null)
   {
-    return static::WORK_FACTOR;
+    $this->iterations = $iterations;
   }
 
-  public function getAlgorithm()
+  abstract public function encode(string $raw, ?string $salt): string;
+
+  public final function algorithm()
   {
     return static::NAME;
+  }
+
+  public function iterations()
+  {
+    return $this->iterations;
   }
 }
