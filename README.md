@@ -9,3 +9,7 @@ PHP approach to [Django's password system](https://docs.djangoproject.com/en/2.2
 make install
 make test
 ```
+
+## Credits
+* [Pep Mañas](https://github.com/Neengash)
+* [Joan Font](https://github.com/joanfont)
