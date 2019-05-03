@@ -1,10 +1,10 @@
 <?php
 
+use Passwords\Exception;
+use Passwords\Hasher;
 use Passwords\HasherFactory;
 use Passwords\Password;
 use PHPUnit\Framework\TestCase;
-use Passwords\Hasher;
-use Passwords\Exception;
 
 class HasherFactoryTest extends TestCase
 {

@@ -5,7 +5,6 @@ use Passwords\Hasher;
 use Passwords\HasherFactory;
 use Passwords\Password;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 
 class ComparatorTest extends TestCase
 {
@@ -35,7 +34,7 @@ class ComparatorTest extends TestCase
   private function getFactoryMock()
   {
     $factory_prophet = $this->prophesize(HasherFactory::class);
-    $factory_prophet->makeFromPassword(Argument::any())->willReturn(new Hasher\Dummy());
+    $factory_prophet->makeFromPassword(Prophecy\Argument::any())->willReturn(new Hasher\Dummy());
     return $factory_prophet->reveal();
   }
 }

@@ -1,11 +1,8 @@
 <?php
 
-use Passwords\Comparator;
-use Passwords\HasherFactory;
+use Passwords\Hasher;
 use Passwords\Helper;
 use PHPUnit\Framework\TestCase;
-
-use Passwords\Hasher;
 
 
 class HelperTest extends TestCase

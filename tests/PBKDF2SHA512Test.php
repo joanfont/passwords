@@ -1,8 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
 use Passwords\Hasher;
+use PHPUnit\Framework\TestCase;
 
 class PBKDF2SHA512Test extends TestCase
 {
