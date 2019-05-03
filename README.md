@@ -30,7 +30,7 @@ PasswordHelper::registerHasher(new Hasher\SHA1);
 
 If no default hasher is provided, first hasher registered will be used as default.
 
-## Make your custom hasher
+###  Make your custom hasher
 Please do not use in production in any purpose.
 ```php
 use Password\Hasher\Hasher;
