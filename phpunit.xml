@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<phpunit colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         forceCoversAnnotation="true">
+  <testsuites>
+      <testsuite name="unit">
+          <directory>tests</directory>
+      </testsuite>
+  </testsuites>
+
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix="Test.php">tests</directory>
+    </whitelist>
+  </filter>
+</phpunit>

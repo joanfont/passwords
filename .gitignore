@@ -4,3 +4,4 @@ vendor/*
 !vendor/.gitkeep
 
 .phpunit.result.cache
+coverage.xml
